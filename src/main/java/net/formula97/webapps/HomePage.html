@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html xmlns:wicket="http://wicket.apache.org">
+<html xmlns:wicket="http://wicket.apache.org" lang="ja" xml:lang="ja">
 	<head>
 		<meta charset="utf-8" />
 		<title>Apache Wicket Quickstart</title>
 		<link href='https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' />
 		<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
 	</head>
-	<body>
-		<table style="border: 1px solid black;">
+	<body style="margin: 16px; font-family: sans-serif, Arial;">
+		<h2>ソート機能のないやつ</h2>
+		<p>横のデータ個数(=列数)は状況により不定な場合を想定。</p>
+		<table style="border: 1px solid black;" cellspacing="0" cellpadding="2px">
 			<thead>
 			<tr>
 				<th style="border: 1px solid black; text-align: center; font-weight: bold;" wicket:id="tableHeader">
@@ -21,5 +23,29 @@
 			</tr>
 			</tbody>
 		</table>
+		<hr />
+		<h2>ソート機能のあるやる</h2>
+		<p><a href="http://www.soumu.go.jp/denshijiti/code.html" target="_blank">総務省の全国地方公共団体コードのページ</a>で公開されている<a href="http://www.soumu.go.jp/main_content/000618153.xls">Excelファイル</a>から作成。</p>
+		<div style="overflow-x: auto;">
+			<table style="border: 1px solid black;" cellspacing="0" cellpadding="2px">
+				<thead>
+				<tr>
+					<th style="border: 1px solid black; text-align: center; font-weight: bold; width: 160px;">市区町村コード</th>
+					<th style="border: 1px solid black; text-align: center; font-weight: bold; width: 120px;">県名</th>
+					<th style="border: 1px solid black; text-align: center; font-weight: bold; width: 240px;">市区町村名</th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr style="border: 1px solid black;" wicket:id="sortedRow">
+					<td style="border: 1px solid black;" wicket:id="code">33101</td>
+					<td style="border: 1px solid black;" wicket:id="pref">岡山県</td>
+					<td style="border: 1px solid black;" wicket:id="city">岡山市北区</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		<div style="margin: 16px;">
+			<span wicket:id="navigator">[dataview navigator]</span>
+		</div>
 	</body>
 </html>
