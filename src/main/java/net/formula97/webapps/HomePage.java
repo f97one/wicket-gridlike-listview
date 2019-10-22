@@ -1,5 +1,6 @@
 package net.formula97.webapps;
 
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.OrderByBorder;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -73,9 +74,10 @@ public class HomePage extends WebPage {
 		add(dataView);
 
 		// ソート機能のあるやつ
+        // DataView本体
 		List<CityCode> cityCodeList = loadFromCsv("city_code.csv");
 		CityDataProvider cityDataProvider = new CityDataProvider(cityCodeList);
-		DataView<CityCode> cityCodeDataView = new DataView<CityCode>("sortedRow", cityDataProvider) {
+		final DataView<CityCode> cityCodeDataView = new DataView<CityCode>("sortedRow", cityDataProvider) {
 			private static final long serialVersionUID = -804351522780441495L;
 
 			@Override
@@ -87,7 +89,38 @@ public class HomePage extends WebPage {
 				item.add(new Label("city", Model.of(cityCode.getCity())));
 			}
 		};
+		// 1ページの表示行数
 		cityCodeDataView.setItemsPerPage(10L);
+
+		// 市区町村コードでソート
+        add(new OrderByBorder<String>("sortByCode", "code", cityDataProvider) {
+
+            private static final long serialVersionUID = -2219504130997414597L;
+
+            @Override
+            protected void onSortChanged() {
+                cityCodeDataView.setCurrentPage(0);
+            }
+        });
+        // 都道府県でソート
+        add(new OrderByBorder<String>("sortByPref", "pref", cityDataProvider) {
+            private static final long serialVersionUID = -5484767386370484483L;
+
+            @Override
+            protected void onSortChanged() {
+                cityCodeDataView.setCurrentPage(0);
+            }
+        });
+        // 市区町村でソート
+        add(new OrderByBorder<String>("sortByCity", "city", cityDataProvider) {
+
+            private static final long serialVersionUID = -7015590476370694557L;
+
+            @Override
+            protected void onSortChanged() {
+                cityCodeDataView.setCurrentPage(0);
+            }
+        });
 
 		add(cityCodeDataView);
 		add(new PagingNavigator("navigator", cityCodeDataView));
