@@ -3,6 +3,7 @@ package net.formula97.webapps;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CityDetachableModel extends LoadableDetachableModel<CityCode> {
 
@@ -26,5 +27,24 @@ public class CityDetachableModel extends LoadableDetachableModel<CityCode> {
     @Override
     protected CityCode load() {
         return cityList.stream().filter(code -> code.getCode().equals(this.code)).findFirst().orElse(null);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        } else if (obj == null) {
+            return false;
+        } else if (obj instanceof CityDetachableModel) {
+            CityDetachableModel other = (CityDetachableModel) obj;
+            return other.code.equals(this.code);
+        }
+
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(code);
     }
 }
